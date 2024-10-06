@@ -1,17 +1,12 @@
 import type { Metadata } from "next";
+import { Montserrat, Sansita } from "next/font/google";
 import localFont from "next/font/local";
 import "./globals.css";
+import NavBar from "@/components/widgets/navbar";
+import Footer from "@/components/widgets/footer";
 
-const geistSans = localFont({
-  src: "./fonts/GeistVF.woff",
-  variable: "--font-geist-sans",
-  weight: "100 900",
-});
-const geistMono = localFont({
-  src: "./fonts/GeistMonoVF.woff",
-  variable: "--font-geist-mono",
-  weight: "100 900",
-});
+const montserrat = Montserrat({subsets: ["latin"]})
+const sansita = Sansita({subsets: ["latin"], variable: "--font-sansita", weight: ["400", "700", "800", "900"]})
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -24,11 +19,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className={`${sansita.variable}`}>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${montserrat.className} antialiased`}
       >
+        <NavBar/>
         {children}
+        <Footer/>
       </body>
     </html>
   );
