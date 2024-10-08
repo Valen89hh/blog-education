@@ -14,7 +14,7 @@ const Logo: React.FC<LogoProps> = ({
         <Link href={"/"}>
             <Image
                 alt="logo"
-                src={"Logo.svg"}
+                src={"/Logo.svg"}
                 width={97*size}
                 height={50*size}
                 className={className}
