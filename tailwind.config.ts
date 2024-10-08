@@ -31,7 +31,8 @@ const config: Config = {
         },
         slate: {
           gray: "var(--slate-gray)",
-          c: "var(--slate-c)"
+          c: "var(--slate-c)",
+          e: "var(--slate-e)"
         },
         ash: {
           gray: "var(--ash-gray)"
