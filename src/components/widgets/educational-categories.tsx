@@ -38,9 +38,9 @@ const EducationalCategories = () => {
                         </li>
                     ))}
                 </ul>
-                <div className="grid grid-cols-8 gap-4 h-full">
-                    <Card className="col-span-5 h-full flex gap-4">
-                        <article className="w-[60%] space-y-2 text-onyx-dark">
+                <div className="grid grid-cols-1 lg:grid-cols-8 gap-4 h-full">
+                    <Card className="col-span-1 lg:col-span-5 h-full flex gap-4">
+                        <article className="w-full md:w-[60%] space-y-2 text-onyx-dark">
                             <Image
                                 src={"/post-2.png"}
                                 alt=""
@@ -53,7 +53,7 @@ const EducationalCategories = () => {
                             <p className="text-sm text-onyx-dark">Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus autem similique corporis eligendi asperiores nulla!</p>
                             <Link href={""} className="text-onyx-dark underline">View Post</Link>
                         </article>
-                        <div className="w-[40%] grid grid-col-1 gap-4 grid-rows-4">
+                        <div className="w-[40%] hidden md:grid grid-col-1 gap-4 grid-rows-4">
                             {Array.from({length: 4}).map((_, i)=>(
                                 <article key={"article-"+i} className="flex gap-2">
                                     <Image
@@ -71,7 +71,7 @@ const EducationalCategories = () => {
                             ))}
                         </div>
                     </Card>
-                    <Card className="col-span-3 h-fit flex flex-col gap-2">
+                    <Card className="col-span-1 lg:col-span-3 h-fit flex flex-col gap-2">
                         <h3 className="h-full font-medium">Relacionado</h3>
                         <div className="grid gap-4 grid-cols-1 h-[28rem] grid-rows-3 w-full">
                             {Array.from({length: 3}).map((_, i)=>(

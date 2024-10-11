@@ -26,11 +26,20 @@ const CardMainPost = () => {
                             height={4000}
                             className="w-7 h-7 rounded-full object-cover"
                         />
-                        <h4 className="w-fit text-nowrap text-[1rem]">Joanna Wellick</h4>
-                        <span className="text-slate-gray">    </span>
-                        <span className="text-slate-gray text-sm">June 18, 2024</span>
+                        <div className="flex lg:hidden flex-col">
+                            <h4 className="w-fit text-nowrap text-[1rem]">Joanna Wellick</h4>
+                            <div className="flex items-center gap-1 text-slate-gray">
+                                <span className="text-slate-gray text-sm">June 18, 2024</span>
+                                <span className="text-slate-gray">    </span>
+                                <Share2 size={16}/>
+                                <span className="text-sm ">1k shares</span>
+                            </div>
+                        </div>
+                        <h4 className="w-fit text-nowrap hidden lg:block text-[1rem]">Joanna Wellick</h4>
+                        <span className="text-slate-gray hidden lg:block">    </span>
+                        <span className="text-slate-gray text-sm hidden lg:block">June 18, 2024</span>
                     </div>
-                    <div className="text-slate-gray flex items-center gap-1">
+                    <div className="text-slate-gray hidden lg:flex items-center gap-1">
                         <Share2 size={16}/>
                         <span className="text-sm">1k shares</span>
                     </div>
@@ -39,7 +48,7 @@ const CardMainPost = () => {
                     Educadores de todo el mundo están encontrando métodos innovadores para mejorar
                     el acceso a una educación de calidad, asegurando que ningún estudiante se quede atrás.
                 </p>
-                <Link href={""} className="text-onyx-dark w-fit mt-1 underline">
+                <Link href={"/posts/1"} className="text-onyx-dark w-fit mt-1 underline">
                     View Post
                 </Link>
             </div>
