@@ -1,7 +1,7 @@
 import "@/styles/post-styles.css"
 
 interface PostContentProps{
-    htmlContent: String
+    htmlContent: string
 }
 
 const PostContent: React.FC<PostContentProps> = ({
