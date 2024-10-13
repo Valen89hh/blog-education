@@ -17,6 +17,9 @@ const config: Config = {
           '2xl': '5rem',
         },
       },
+      borderRadius: {
+        ms: "4px"
+      },
       screens: {
         xs: "480px",
         xxs: "350px",

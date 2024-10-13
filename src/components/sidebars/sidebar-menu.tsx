@@ -1,19 +1,27 @@
+"use client"
+
 import { useModalMenuState } from "@/storage/menu-storage";
 import { AnimatePresence, motion } from "framer-motion";
 import LogoDark from "../ui/logo-dark";
-import { MoveLeft, Search, X } from "lucide-react";
+import { Heart, LogOut, MoveLeft, Newspaper, Search, Settings, X } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import ButtonOutline from "../buttons/button-outline";
 import ButtonPrimary from "../buttons/button-primary";
 import useNoScroll from "@/hooks/use-not-scroll";
 import { useModalSearchState } from "@/storage/navbar-storage";
+import { useProfileState } from "@/storage/auth-storage";
+import Image from "next/image";
+import { div } from "framer-motion/client";
+import { signOut } from "@/app/(auth)/actions";
 
 
 const SideBarMenu = () => {
     const {closeModal, isOpenModal} = useModalMenuState()
     const [isOpenCategories, setIsOpenCategories] = useState(false)
+    const [isOpenDashboard, setIsOpenDashboard] = useState(false)
     const {openModalSearch} = useModalSearchState()
+    const {profile, loadingProfile} = useProfileState()
     useNoScroll(isOpenModal)
 
     
@@ -50,20 +58,15 @@ const SideBarMenu = () => {
                             </div>
                         </div>
                         <div className="px-4 h-full relative py-2 overflow-hidden">
-                            <ul className="uppercase">
-                                <li>
-                                    <Link href={"/"} className="hover:underline">
+                            <ul className="">
+                                <li onClick={closeModal}>
+                                    <Link href={"/"} className="hover:underline uppercase">
                                         Inicio
                                     </Link>
                                 </li>
-                                <li>
-                                    <Link href={"/posts"} className="hover:underline">
+                                <li onClick={closeModal}>
+                                    <Link href={"/posts"} className="hover:underline uppercase">
                                         Posts
-                                    </Link>
-                                </li>
-                                <li>
-                                    <Link href={"/me"} className="hover:underline">
-                                        Mis Posts
                                     </Link>
                                 </li>
                                 <li>
@@ -71,17 +74,94 @@ const SideBarMenu = () => {
                                         Categor&iacute;as
                                     </button>
                                 </li>
-                                <li className="font-sansita mt-4 flex gap-4 items-center uppercase ">
-                                    <Link href={"login"} >
-                                        <ButtonOutline className="uppercase text-onyx-dark border-onyx-dark">
-                                            Login
-                                        </ButtonOutline>
-                                    </Link>
-                                    <Link href={"register"} >
-                                        <ButtonPrimary className="uppercase">
-                                            Register
-                                        </ButtonPrimary>
-                                    </Link>
+                                <li className=" mt-2 flex gap-4 items-center ">
+                                    
+                                    {loadingProfile ? (
+                                            <motion.div
+                                            className="animate-pulse  flex items-center gap-2"
+                                            initial={{ opacity: 0 }}
+                                            animate={{ opacity: 1 }}
+                                            exit={{ opacity: 0 }}
+                                            >
+                                                <div className="rounded-full h-8 w-8 bg-gray-100"></div>
+                                                <div className="rounded-md h-5 w-20 bg-gray-100"></div>
+                                            </motion.div>
+                                        ): 
+                                    <>
+                                        {profile ? (
+                                            <div className="">
+                                                <button className="flex items-center gap-2" onClick={()=>setIsOpenDashboard(prev=>!prev)}>
+                                                    <Image
+                                                        src={profile.avatar_url ?? "/user-none.svg"}
+                                                        alt={profile.name}
+                                                        width={400}
+                                                        height={400}
+                                                        className="h-6 w-6 object-cover rounded-full"
+                                                    />
+                                                    <span>{profile.name}</span>
+                                                </button>
+                                                <AnimatePresence>
+                                                    {isOpenDashboard && (
+
+                                                        <motion.div className="overflow-hidden">
+                                                            <motion.ul
+                                                                initial={{y: "-100%"}}
+                                                                animate={{ y: 0} }
+                                                                exit={{y: "-100%"}}
+                                                                transition={{type: "tween"}}
+                                                                className="px-6 space-y-2 pt-2"
+                                                            >
+                                                                <li onClick={closeModal} >
+                                                                    <Link href={"/dashboard/posts"} className="hover:underline flex items-center gap-1">
+                                                                        <Newspaper className="text-ash-gray" size={20}/>
+                                                                        Dashboard
+                                                                    </Link>
+                                                                </li>
+                                                                <li onClick={closeModal} >
+                                                                    <Link href={"/dashboard/favorites"} className="hover:underline flex items-center gap-1">
+                                                                        <Heart className="text-ash-gray" size={20}/>
+                                                                        Favoritos
+                                                                    </Link>
+                                                                </li>
+                                                                <li onClick={closeModal} >
+                                                                    <Link href={"/dashboard/settings"} className="hover:underline flex items-center gap-1">
+                                                                        <Settings className="text-ash-gray" size={20}/>
+                                                                        Configuraci&oacute;n
+                                                                    </Link>
+                                                                </li>
+                                                                <li onClick={async()=>{
+                                                                    await signOut()
+                                                                    closeModal()
+                                                                    
+                                                                }} >
+                                                                    <button className="hover:underline flex items-center gap-1">
+                                                                        <LogOut className="text-ash-gray" size={20}/>
+                                                                        Logout
+                                                                    </button>
+                                                                </li>
+                                                                
+                                                            </motion.ul>
+                                                        </motion.div>
+                                                    )}
+                                                </AnimatePresence>
+                                            </div>
+                                        ): (
+                                            <>
+                                                <Link href={"/login"} >
+                                                    <ButtonOutline className="uppercase font-sansita text-onyx-dark border-onyx-dark">
+                                                        Login
+                                                    </ButtonOutline>
+                                                </Link>
+                                                <Link href={"/register"} >
+                                                    <ButtonPrimary className="uppercase font-sansita">
+                                                        Register
+                                                    </ButtonPrimary>
+                                                </Link>
+                                            </>
+                                        )}
+                                    </> 
+                                    }
+                                    
                                 </li>
                             </ul>
                             <AnimatePresence>
@@ -98,7 +178,10 @@ const SideBarMenu = () => {
                                             </button>
                                             <ul className="space-y-1">
                                                 {Array.from({length: 10}).map((_, i)=>(
-                                                    <li key={"cat-"+i}>
+                                                    <li onClick={()=>{
+                                                        closeModal()
+                                                        setIsOpenCategories(false)
+                                                    }} key={"cat-"+i}>
                                                         <Link className="uppercase hover:underline" href={"/posts?category=education"}>
                                                             Category + {i}
                                                         </Link>

@@ -1,8 +1,17 @@
+"use client"
+
 import Container from "@/components/containers/container";
+import { ROUTES_NOT_LAYOUT } from "@/constants/routes";
 import { Facebook, Instagram, Twitter } from "lucide-react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 const Footer = () => {
+    const pathName = usePathname()
+
+    if(ROUTES_NOT_LAYOUT.some(route=>pathName.startsWith(route))) return null
+
+
     return ( 
         <footer className="py-6 bg-onyx-dark text-white">
             <Container className="flex justify-between items-center">
