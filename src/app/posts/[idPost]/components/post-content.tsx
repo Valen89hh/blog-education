@@ -1,4 +1,4 @@
-import "@/styles/post-styles.css"
+import "@/styles/post-styles.scss"
 
 interface PostContentProps{
     htmlContent: string
