@@ -23,3 +23,41 @@ export const getURL = (path: string = '') => {
     // Concatenate the URL and the path.
     return path ? `${url}/${path}` : url;
 };
+
+export function calcularTiempoLectura(htmlContent: string): number {
+    // Eliminar etiquetas HTML
+    const plainText = htmlContent.replace(/<[^>]+>/g, "");
+    
+    // Contar las palabras en el texto
+    const wordCount = plainText.trim().split(/\s+/).length;
+    
+    // Calcular el tiempo de lectura (200 palabras por minuto)
+    const wordsPerMinute = 200;
+    const readingTime = Math.ceil(wordCount / wordsPerMinute);
+    
+    return readingTime; // Tiempo de lectura en minutos
+}
+
+export function getRangePage(page: number, itemsPerPage: number){
+    const from = (page - 1) * itemsPerPage;
+    const to = from + itemsPerPage - 1;
+
+    return{
+        from, 
+        to
+    }
+}
+
+export function calculateMountPage(mount: number, total: number) {
+    const add = (total % mount) !== 0 ? 1 : 0;
+    return Math.floor(total / mount) + add;
+}
+
+// Función que divide el array en chunks
+export const chunkArray = <T,>(array: T[], size: number): T[][] => {
+    const chunks: T[][] = [];
+    for (let i = 0; i < array.length; i += size) {
+      chunks.push(array.slice(i, i + size));
+    }
+    return chunks;
+};

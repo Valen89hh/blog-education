@@ -3,17 +3,19 @@
 import { useModalMenuState } from "@/storage/menu-storage";
 import { AnimatePresence, motion } from "framer-motion";
 import LogoDark from "../ui/logo-dark";
-import { Heart, LogOut, MoveLeft, Newspaper, Search, Settings, X } from "lucide-react";
+import { Heart, LogOut, MoveLeft, Newspaper, NotebookText, Search, Settings, X } from "lucide-react";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useTransition } from "react";
 import ButtonOutline from "../buttons/button-outline";
 import ButtonPrimary from "../buttons/button-primary";
 import useNoScroll from "@/hooks/use-not-scroll";
 import { useModalSearchState } from "@/storage/navbar-storage";
 import { useProfileState } from "@/storage/auth-storage";
 import Image from "next/image";
-import { div } from "framer-motion/client";
 import { signOut } from "@/app/(auth)/actions";
+import { Category } from "@/lib/supabase/table-type";
+import { getCategories } from "@/app/create-post/actions";
+import CardAnimation from "../animations/card-animation";
 
 
 const SideBarMenu = () => {
@@ -22,7 +24,16 @@ const SideBarMenu = () => {
     const [isOpenDashboard, setIsOpenDashboard] = useState(false)
     const {openModalSearch} = useModalSearchState()
     const {profile, loadingProfile} = useProfileState()
+    const [categories, setCategories] = useState<Category[]>([])
+    const [loadingCategories, startLoadingCategories] = useTransition()
     useNoScroll(isOpenModal)
+
+    useEffect(()=>{
+        startLoadingCategories(async()=>{
+            const result = await getCategories()
+            if(result.success) setCategories(result.data)
+        })
+    }, [])
 
     
     return ( 
@@ -65,7 +76,7 @@ const SideBarMenu = () => {
                                     </Link>
                                 </li>
                                 <li onClick={closeModal}>
-                                    <Link href={"/posts"} className="hover:underline uppercase">
+                                    <Link href={"/posts/category/all/1"} className="hover:underline uppercase">
                                         Posts
                                     </Link>
                                 </li>
@@ -124,6 +135,12 @@ const SideBarMenu = () => {
                                                                     </Link>
                                                                 </li>
                                                                 <li onClick={closeModal} >
+                                                                    <Link href={"/create-post"} className="hover:underline flex items-center gap-1">
+                                                                        <NotebookText className="text-ash-gray" size={20}/>
+                                                                        Crear Post
+                                                                    </Link>
+                                                                </li>
+                                                                <li onClick={closeModal} >
                                                                     <Link href={"/dashboard/settings"} className="hover:underline flex items-center gap-1">
                                                                         <Settings className="text-ash-gray" size={20}/>
                                                                         Configuraci&oacute;n
@@ -177,16 +194,19 @@ const SideBarMenu = () => {
                                                 <MoveLeft/>
                                             </button>
                                             <ul className="space-y-1">
-                                                {Array.from({length: 10}).map((_, i)=>(
-                                                    <li onClick={()=>{
-                                                        closeModal()
-                                                        setIsOpenCategories(false)
-                                                    }} key={"cat-"+i}>
-                                                        <Link className="uppercase hover:underline" href={"/posts?category=education"}>
-                                                            Category + {i}
-                                                        </Link>
-                                                    </li>
-                                                ))}
+                                                {loadingCategories ? Array.from({length: 5}).map((_, i)=><CardAnimation className="h-10 w-full" key={"card-anim-"+i}/>)
+                                                : 
+                                                    categories.map((category)=>(
+                                                        <li onClick={()=>{
+                                                            closeModal()
+                                                            setIsOpenCategories(false)
+                                                        }} key={"cat-"+category.id}>
+                                                            <Link className="uppercase hover:underline" href={`/posts/category/${category.category_slug}/1`}>
+                                                                {category.category_name}
+                                                            </Link>
+                                                        </li>
+                                                    ))
+                                                }
                                             </ul>
                                     </motion.div>
                                 )}

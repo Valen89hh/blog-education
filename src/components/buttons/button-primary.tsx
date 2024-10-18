@@ -13,7 +13,7 @@ const ButtonPrimary: React.FC<ButtonProps> = ({
     ...props
 }) => {
     return ( 
-        <button className={twMerge("border-2 border-onyx-dark bg-onyx-dark text-white rounded-[4px] px-4 py-2 items-center justify-center flex gap-2", className)} {...props}>
+        <button className={twMerge("border-2 border-onyx-dark disabled:opacity-50 bg-onyx-dark text-white rounded-[4px] px-4 py-2 items-center justify-center flex gap-2", className)} {...props}>
             {isLoading && (
                 <CircularProgress size={16} color="inherit"/>
             )}

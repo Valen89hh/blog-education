@@ -106,6 +106,19 @@ export function useFormFields<T extends object>(initialState: T, validators: Val
         }
     };
 
+    const handleValidateSubmit = (
+        onSubmit: (data: T) => void
+    ) => {
+        if (validate()) {
+            const data = Object.keys(fields).reduce((acc, key) => {
+                // Cast necesario para asegurarse que el tipo es el correcto
+                acc[key as keyof T] = fields[key as keyof T].value as T[keyof T];
+                return acc;
+            }, {} as T);
+            onSubmit(data);
+        }
+    };
+
     // Actualiza el valor de un campo
     const setFieldValue = <K extends keyof T>(key: K, value: T[K]) => {
         const currentValues = Object.keys(fields).reduce((acc, key) => {
@@ -135,6 +148,8 @@ export function useFormFields<T extends object>(initialState: T, validators: Val
         setFieldError,
         reset,
         handleChange,
-        handleSubmit
+        handleSubmit,
+        validate,
+        handleValidateSubmit
     };
 }

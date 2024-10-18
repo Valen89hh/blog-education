@@ -6,9 +6,9 @@ import Logo from "../ui/logo";
 import Link from "next/link";
 import ButtonOutline from "../buttons/button-outline";
 import ButtonPrimary from "../buttons/button-primary";
-import { Heart, LogOut, Menu, Newspaper, Search, Settings } from "lucide-react";
+import { Heart, LogOut, Menu, Newspaper, NotebookText, Search, Settings } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useTransition } from "react";
 import { useOutsideClick } from "@/hooks/use-outside-click";
 import SideBarMenu from "../sidebars/sidebar-menu";
 import { useModalMenuState } from "@/storage/menu-storage";
@@ -22,6 +22,10 @@ import { useProfileState } from "@/storage/auth-storage";
 import { getProfileById } from "@/actions/auht-actions";
 import Image from "next/image";
 import { signOut } from "@/app/(auth)/actions";
+import { Category } from "@/lib/supabase/table-type";
+import { getCategories } from "@/app/create-post/actions";
+import CardAnimation from "../animations/card-animation";
+import { chunkArray } from "@/lib/utils/helpers";
 
 const NavBar = ({user}: {user: User | null}) => {
     const [openDrop, setOpenDrop] = useState(false)
@@ -33,6 +37,15 @@ const NavBar = ({user}: {user: User | null}) => {
     const {openModalSearch} = useModalSearchState()
     const pathName = usePathname()
     const {profile, loadingProfile, setLoadingProfile,setProfile} = useProfileState()
+    const [categories, setCategories] = useState<Category[]>([])
+    const [loadingCategories, startLoadingCategories] = useTransition()
+
+    useEffect(()=>{
+        startLoadingCategories(async()=>{
+            const result = await getCategories()
+            if(result.success) setCategories(result.data)
+        })
+    }, [])
 
     useEffect(()=>{
         const isDarkMode = ROUTES_NAVBAR_MODE_DARK.some(route => {
@@ -84,7 +97,7 @@ const NavBar = ({user}: {user: User | null}) => {
                             </Link>
                         </li>
                         <li>
-                            <Link href={"/posts"} className="hover:underline">
+                            <Link href={"/posts/category/all/1"} className="hover:underline">
                                 Posts
                             </Link>
                         </li>
@@ -104,19 +117,23 @@ const NavBar = ({user}: {user: User | null}) => {
                                     initial={{opacity: 0, display: "none"}}
                                     animate={openDrop ? {opacity: 1, display: "grid"} : {opacity: 0, display: "none"}}
                                     transition={{duration: 0.15}}
-                                    className="absolute z-20 border-2 border-slate-e rounded-sm translate-y-2 left-1/2 transform -translate-x-1/2 bg-white p-4 origin-center text-onyx-dark w-max grid grid-cols-3 gap-8 before:content-[''] before:absolute before:-top-2 before:left-1/2 before:-translate-x-1/2 before:border-l-[10px] before:border-l-transparent before:border-r-[10px] before:border-r-transparent before:border-b-[10px] before:border-b-white"
+                                    className="absolute z-20 border-2 border-slate-e rounded-sm translate-y-2 left-1/2 transform -translate-x-1/2 bg-white p-4 origin-center text-onyx-dark w-max grid grid-cols-2 gap-8 before:content-[''] before:absolute before:-top-2 before:left-1/2 before:-translate-x-1/2 before:border-l-[10px] before:border-l-transparent before:border-r-[10px] before:border-r-transparent before:border-b-[10px] before:border-b-white"
                                 >
-                                    {Array.from({length: 5}).map((_, j)=>(
-                                        <motion.ul key={j} className="space-y-1 text-sm">
-                                            {Array.from({length: 5}).map((_, i)=>(
-                                                <li key={generateUUID()}>
-                                                    <Link href={"/posts?category=education"} className="hover:underline">
-                                                        Education
-                                                    </Link>
+                                    {loadingCategories ? Array.from({length: 5}).map((_, i)=><CardAnimation className="w-full h-10" key={"card-anim-category-"+i}/>)
+                                    : chunkArray(categories, 5).map((chunk, index) => (
+                                        <motion.ul className="space-y-1 text-sm" key={`category-section-${index}`}>
+                                            {chunk.map((category) => (
+                                                <li key={category.category_slug}>
+                                                <Link href={`/posts/category/${category.category_slug}/1`} className="hover:underline">
+                                                    {category.category_name}
+                                                </Link>
                                                 </li>
                                             ))}
                                         </motion.ul>
-                                    ))}
+                                        ))
+                                    }
+                                    
+                                    
                                 </motion.div>
                         </li>
                         <li>
@@ -172,6 +189,12 @@ const NavBar = ({user}: {user: User | null}) => {
                                                     <Link href={"/dashboard/favorites"} className="hover:underline py-2 px-1 flex items-center gap-1">
                                                         <Heart className="text-ash-gray" size={20}/>
                                                         Favoritos
+                                                    </Link>
+                                                </li>
+                                                <li onClick={()=>setOpenDashboard(false)} >
+                                                    <Link href={"/create-post"} className="hover:underline py-2 px-1 flex items-center gap-1">
+                                                        <NotebookText className="text-ash-gray" size={20}/>
+                                                        Crear Post
                                                     </Link>
                                                 </li>
                                                 <li onClick={()=>setOpenDashboard(false)} >

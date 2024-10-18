@@ -1,9 +1,14 @@
-import { type NextRequest } from 'next/server'
+import { NextResponse, type NextRequest } from 'next/server'
 import { updateSession } from '@/lib/supabase/middleware'
 
 export async function middleware(request: NextRequest) {
-  // update user's auth session
-  return await updateSession(request)
+   // Si la solicitud tiene queries, omitimos la actualización de sesión
+   if (request.nextUrl.searchParams.has('page') || request.nextUrl.searchParams.has('search') || request.nextUrl.searchParams.has('filter')) {
+    return NextResponse.next();
+  }
+
+  // De lo contrario, continuamos con la actualización de sesión
+  return await updateSession(request);
 }
 
 export const config = {
