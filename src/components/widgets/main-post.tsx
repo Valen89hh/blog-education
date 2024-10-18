@@ -3,8 +3,8 @@ import Container from "../containers/container";
 import CardMainPost from "../cards/card-main-post";
 import ButtonOutline from "../buttons/button-outline";
 import { unstable_cache } from "next/cache";
-import { createClient } from "@/lib/supabase/server";
 import { extractTextFromHTMLString } from "@/lib/utils/formatter-string";
+import { createClient } from "@/lib/supabase/client";
 
 
 const supabase = createClient()
