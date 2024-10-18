@@ -7,7 +7,7 @@ import { extractTextFromHTMLString } from "@/lib/utils/formatter-string"
 import { Result } from "@/lib/utils/response"
 
 export const updateViewsPost = async(idPost: number, views: number): Promise<Result<string>>=>{
-    const supabase = createClient()
+    const supabase = _createClient()
 
     const {error} = await supabase.from("posts").update({views: views+1}).eq("id", idPost)
     if(error) return {success: false, error: error.message}
