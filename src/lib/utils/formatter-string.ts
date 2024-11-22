@@ -9,12 +9,14 @@ export function joinBlanks(text: string): string{
 
 export function extractTextFromHTMLString(htmlContent: string, maxLength: number = 150): string {
   const regex = /<p[^>]*>(.*?)<\/p>/gi;
-  const matches = Array.from(htmlContent.matchAll(regex)); // Convertir iterador a array
-  
+  const matches = Array.from(htmlContent.matchAll(regex));
+
   let description = '';
 
   for (const match of matches) {
-    description += match[1].trim() + ' ';
+    // Remover etiquetas HTML dentro del contenido capturado
+    const plainText = match[1].replace(/<[^>]+>/g, '').trim();
+    description += plainText + ' ';
     if (description.length >= maxLength) {
       description = description.slice(0, maxLength); // Limitar el número de caracteres
       break;
@@ -22,6 +24,13 @@ export function extractTextFromHTMLString(htmlContent: string, maxLength: number
   }
 
   return description.trim() + '...';
+}
+
+export function truncateText(text: string, maxLength: number): string {
+  if (text.length <= maxLength) {
+    return text; // Retornar el texto original si no excede la longitud
+  }
+  return text.slice(0, maxLength) + '...';
 }
 
 export function stringToUrlSlug(str: string): string {

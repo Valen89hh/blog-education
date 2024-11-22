@@ -1,5 +1,5 @@
 import { Post, PostForShow } from "@/lib/supabase/table-type";
-import { stringToUrlSlug } from "@/lib/utils/formatter-string";
+import { stringToUrlSlug, truncateText } from "@/lib/utils/formatter-string";
 import { Share, Share2 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -29,7 +29,7 @@ const CardMainPost = ({post}: {post: PostForShow}) => {
                             className="w-7 h-7 rounded-full object-cover"
                         />
                         <div className="flex lg:hidden flex-col">
-                            <h4 className="w-fit text-nowrap text-[1rem]">{post.authorName}</h4>
+                            <h4 className="w-fit text-nowrap text-[1rem]">{truncateText(post.authorName, 15)}</h4>
                             <div className="flex items-center gap-1 text-slate-gray">
                                 <span className="text-slate-gray text-sm">{post.published_at ? new Date(post.published_at).toLocaleDateString() : ""}</span>
                                 <span className="text-slate-gray">    </span>
@@ -37,7 +37,7 @@ const CardMainPost = ({post}: {post: PostForShow}) => {
                                 <span className="text-sm ">{post.shareds} shares</span>
                             </div>
                         </div>
-                        <h4 className="w-fit text-nowrap hidden lg:block text-[1rem]">{post.authorName}</h4>
+                        <h4 className="w-fit text-nowrap hidden lg:block text-[1rem]">{truncateText(post.authorName, 15)}</h4>
                         <span className="text-slate-gray hidden lg:block">    </span>
                         <span className="text-slate-gray text-sm hidden lg:block">{post.published_at ? new Date(post.published_at).toLocaleDateString() : ""}</span>
                     </div>
