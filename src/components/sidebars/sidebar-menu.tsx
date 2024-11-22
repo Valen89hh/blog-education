@@ -85,6 +85,11 @@ const SideBarMenu = () => {
                                         Categor&iacute;as
                                     </button>
                                 </li>
+                                <li onClick={closeModal}>
+                                    <Link href={"/about-us"} className="hover:underline uppercase">
+                                        Sobre Nosotros
+                                    </Link>
+                                </li>
                                 <li className=" mt-2 flex gap-4 items-center ">
                                     
                                     {loadingProfile ? (
