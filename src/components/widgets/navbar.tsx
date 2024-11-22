@@ -137,8 +137,8 @@ const NavBar = ({user}: {user: User | null}) => {
                                 </motion.div>
                         </li>
                         <li>
-                            <Link href={"/contact"}>
-                                Contacto
+                            <Link href={"/about-us"}>
+                                Sobre Nosotros
                             </Link>
                         </li>
                     </ul>

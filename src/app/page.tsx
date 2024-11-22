@@ -4,6 +4,7 @@ import Container from "@/components/containers/container";
 import Logo from "@/components/ui/logo";
 import CallAction from "@/components/widgets/call-action";
 import EducationalCategories from "@/components/widgets/educational-categories";
+import EncuestaSection from "@/components/widgets/encuesta-section";
 import FocusGroup from "@/components/widgets/focus-group";
 import Hero from "@/components/widgets/hero";
 import MainPost from "@/components/widgets/main-post";
@@ -16,7 +17,7 @@ export default function Home() {
     <>
       <Hero/>
       <MainPost/>
-      <FocusGroup/>
+      <EncuestaSection/>
       <EducationalCategories/>
       <Testimonios/>
     </>
