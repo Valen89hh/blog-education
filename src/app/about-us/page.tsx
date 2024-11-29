@@ -25,77 +25,114 @@ const AboutPage = () => {
                 </Container>
             </div>
             <Container className="flex my-[2rem]">
-                <div className="flex flex-wrap gap-6 h-fit">
-                    <div>
-                        <Image
-                            src={"/xiomora.png"}
-                            alt="xiomara"
-                            width={300}
-                            height={300}
-                            className="h-[10rem] w-[10rem] object-cover"
-                        />
-                        <p className="uppercase text-center">XIOMARA</p>
-                    </div>
-                    <div>
-                        <Image
-                            src={"/rodrigo.png"}
-                            alt="rodrigo"
-                            width={300}
-                            height={300}
-                            className="h-[10rem] w-[10rem] object-cover"
-                        />
-                        <p className="uppercase text-center">RODRIGO</p>
-                    </div>
-                    <div>
-                        <Image
-                            src={"/kely.png"}
-                            alt="kely"
-                            width={300}
-                            height={300}
-                            className="h-[10rem] w-[10rem] object-cover"
-                        />
-                        <p className="uppercase text-center">KEYLI</p>
-                    </div>
-                    <div>
-                        <Image
-                            src={"/sebas.png"}
-                            alt="sebas"
-                            width={300}
-                            height={300}
-                            className="h-[10rem] w-[10rem] object-cover"
-                        />
-                        <p className="uppercase text-center">SEBASTIAN</p>
-                    </div>
-                    <div>
-                        <Image
-                            src={"/kity.png"}
-                            alt="kity"
-                            width={300}
-                            height={300}
-                            className="h-[10rem] w-[10rem] object-cover"
-                        />
-                        <p className="uppercase text-center">KYTZIA</p>
-                    </div>
+                <div className="grid grid-cols-5 gap-8 w-fit mx-auto">
+                    <article className="flex flex-col justify-center items-center">
+                        <div>
+                            <Image
+                                src={"/xiomora.png"}
+                                alt="xiomara"
+                                width={300}
+                                height={300}
+                                className="h-[10rem] rounded-full w-[10rem] object-cover"
+                            />
+                        </div>
+                        <p>Xiomara</p>
+                    </article>
+                    <article className="flex flex-col justify-center items-center">
+                        <div>
+                            <Image
+                                src={"/rodrigo.png"}
+                                alt="xiomara"
+                                width={300}
+                                height={300}
+                                className="h-[10rem] rounded-full w-[10rem] object-cover"
+                            />
+                        </div>
+                        <p>Rodrigo</p>
+                    </article>
+                    <article className="flex flex-col justify-center items-center">
+                        <div>
+                            <Image
+                                src={"/kely.png"}
+                                alt="xiomara"
+                                width={300}
+                                height={300}
+                                className="h-[10rem] rounded-full w-[10rem] object-cover"
+                            />
+                        </div>
+                        <p>Kely</p>
+                    </article>
+                    <article className="flex flex-col justify-center items-center">
+                        <div>
+                            <Image
+                                src={"/sebas.png"}
+                                alt="xiomara"
+                                width={300}
+                                height={300}
+                                className="h-[10rem] rounded-full w-[10rem] object-cover"
+                            />
+                        </div>
+                        <p>Sebastian</p>
+                    </article>
+                    <article className="flex flex-col justify-center items-center">
+                        <div>
+                            <Image
+                                src={"/kity.png"}
+                                alt="xiomara"
+                                width={300}
+                                height={300}
+                                className="h-[10rem] rounded-full w-[10rem] object-cover"
+                            />
+                        </div>
+                        <p>Kitzia</p>
+                    </article>
                 </div>
-                <Link href={"https://drive.google.com/file/d/1cBcAki1sqv9y_5R1Gvb0SNVa3f18oy13/view?usp=drivesdk"} target="_blank">
-                    <Image
-                        src={"/tiktok.png"}
-                        alt="tiktok"
-                        width={716}
-                        height={1113}
-                        className="h-[40rem] object-cover"
-                    />
-                </Link>
             </Container>
             <FocusGroup/>
             <Container className="space-y-6">
                 <h2 className="uppercase text-2xl">Nuestras Entrevistas</h2>
-                <div className="flex justify-center flex-wrap gap-4">
-                    <iframe src="https://drive.google.com/file/d/1bqvoEi2jzCxOHQvMWU-q1acVIlFcX1ZM/preview" width="350" height="480" allow="autoplay"></iframe>
-                    <iframe src="https://drive.google.com/file/d/1bsYxGAX98ngzLS5bknY88w9VNzNwGrbP/preview" width="350" height="480" allow="autoplay"></iframe>
-                    <iframe src="https://drive.google.com/file/d/1bz07eazDVXJpu_vFRfSf7c0oKG0nmKQz/preview" width="350" height="480" allow="autoplay"></iframe>
+                <div className="grid grid-cols-3 gap-8">
+                    <article className="space-y-6">
+                        <Image
+                            src={"/encuesta1.jpeg"}
+                            alt="xiomara"
+                            width={960}
+                            height={400}
+                            className="h-[15rem] object-cover"
+                        />
+                        <Link className="underline" href={"https://drive.google.com/file/d/1bqvoEi2jzCxOHQvMWU-q1acVIlFcX1ZM/preview"} target="_blank">Ver Encuesta</Link>
+                    </article>
+                    <article className="space-y-6">
+                        <Image
+                            src={"/encuesta2.jpg"}
+                            alt="xiomara"
+                            width={960}
+                            height={400}
+                            className="h-[15rem] object-cover"
+                        />
+                        <Link className="underline" href={"https://drive.google.com/file/d/1bsYxGAX98ngzLS5bknY88w9VNzNwGrbP/preview"} target="_blank">Ver Encuesta</Link>
+                    </article>
+                    <article className="space-y-6">
+                        <Image
+                            src={"/encuesta3.jpg"}
+                            alt="xiomara"
+                            width={960}
+                            height={400}
+                            className="h-[15rem] object-cover"
+                        />
+                        <Link className="underline" href={"https://drive.google.com/file/d/1bz07eazDVXJpu_vFRfSf7c0oKG0nmKQz/preview"} target="_blank">Ver Encuesta</Link>
+                    </article>
                 </div>
-                <iframe src="https://drive.google.com/file/d/16um1eWtC358FMRRHTArahfwTjIKEL1rg/preview" className="w-full" height={480} allow="autoplay"></iframe>
+                <article className="space-y-6">
+                    <Image
+                        src={"/elevator.jpeg"}
+                        alt="xiomara"
+                        width={960}
+                        height={400}
+                        className="h-[30rem] w-full object-cover"
+                    />
+                    <Link className="underline" href={"https://drive.google.com/file/d/1bz07eazDVXJpu_vFRfSf7c0oKG0nmKQz/preview"} target="_blank">Ver Elevator Pitch</Link>
+                </article>
             </Container>
         </>
      );
